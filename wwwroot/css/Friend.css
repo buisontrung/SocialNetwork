@@ -1,0 +1,44 @@
+﻿.row-custom-friend {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 20px;
+    column-gap: 10px;
+    
+}
+.recommend-friend {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 20px;
+    column-gap: 10px;
+   
+}
+.row-custom-friend > div {
+    width: calc((100% - 60px) / 7); /* Trừ nửa khoảng cách giữa các cột */
+}
+.recommend-friend > div {
+        width: calc((100% - 60px) / 7); /* Trừ nửa khoảng cách giữa các cột */
+}
+.friend-div {
+    border-radius: 10px;
+    border: 1px solid #d0d3d7;
+    overflow: hidden;
+    background-color:#fff
+}
+.friend-avatar {
+    border-radius: 50%;
+    border-left: 3px solid #fff;
+    border-top: 3px solid #fff;
+    border-bottom: 3px solid #fff;
+    box-sizing: content-box;
+}
+.friend-img {
+    border-radius: 50%;
+    height: 24px;
+    width: 24px;
+}
+.friend-avatar:not(:first-child) {
+    margin-left: -10px;
+}
+.box {
+    box-shadow: 0 10px 15px -5px rgba(0, 0, 0, 0.5);
+}

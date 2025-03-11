@@ -1,0 +1,18 @@
+﻿@model List<ApplicationUser>
+
+@if (Model == null || !Model.Any())
+{
+    <p>No friends found.</p>
+}
+else
+{
+    <ul>
+        @foreach (var friend in Model)
+        {
+            <li>
+                <img src="@friend.ProfilePictureUrl" alt="Profile" width="30" height="30" />
+                @friend.FullName
+            </li>
+        }
+    </ul>
+}

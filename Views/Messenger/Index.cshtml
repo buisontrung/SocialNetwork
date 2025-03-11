@@ -1,0 +1,102 @@
+﻿@model SocialNetwork.ViewModel.ConversationDetailViewModel?
+@section Styles {
+    <link rel="stylesheet" href="~/css/mess.css" />
+}
+<div class="p-4 fghjx">
+    <div class="row-custom-mess h-100">
+        <div class="h-100"><div class="d-flex align-items-center justify-content-center w-100" style="height:40px;background-color:#dedede;border-radius:5px;border:1px solid #ccc"><i class="fab fa-facebook-messenger" style="font-size:18px"></i></div></div>
+        <div class="pt-2 pb-2 d-flex flex-column h-100" style="background-color:#fff;border-radius:10px;">
+            <div class="d-flex justify-content-between pb-3 px-3 ">
+                <h4 class="fw-bold">Đoạn chat</h4>
+                <div><i class="fas fa-edit fs-6"></i></div>
+            </div>
+
+
+            <div class="nav-link text-dark d-flex align-items-center pb-3 px-3 ">
+                <i class="fas fa-search me-2"></i> <input type="text" class="flex-grow-1 p-2" id="search-input1" style="border:1px solid #dedede;border-radius:20px" name="name" value="" placeholder="Tìm kiếm" />
+            </div>
+            <div class="mess-user flex-grow-1">
+
+                @await Component.InvokeAsync("Conversation")
+
+
+            </div>
+        </div>
+        <div class="h-100 pt-2 pb-2 d-flex flex-column d-md-block d-none" style="background-color:#fff;border-radius:10px;">
+            @if(Model !=null && Model.Users !=null){
+                <div class="d-flex justify-content-between align-items-center w-100 pt-2 pb-2 px-3" style="border-bottom:1px solid #dedede">
+                    @foreach(var user in Model.Users){
+                        <div class="d-flex">
+                            <img b-lh69jpwqls="" style="width:40px;height:40px;border-radius:50%;object-fit:cover;" src="/img/@user.ProfilePictureUrl">
+                            <div class="ms-2">
+                                <div><span class="m-0 fw-bold d-block" >@user.NickName</span></div>
+                                <div class=""><span class="m-0 d-block" style="font-size:13px">Hoạt động 1 giờ trước</span></div> <!-- Hiển thị tin nhắn mới nhất -->
+                            </div>
+                        </div>
+                    }
+                    <div class="d-flex align-items-center gap-4">
+                        <i class="fa-solid fa-phone"></i>
+                        <i class="fa-solid fa-video" id="videoCallButton"></i>
+                        <i class="fa-solid fa-ellipsis"></i>
+                    </div>
+                </div>
+                <div class="flex-grow-1 pt-3 d-flex flex-column-reverse mess-conversion" style="overflow-y:auto;height:450px">
+                    @if (Model.RecentMessages != null) {
+                        @foreach (var mess in Model.RecentMessages)
+                        {
+
+                            if (mess.isMine) {
+                                <div>
+                                    <div class="pb-3">
+                                        <div class="d-flex flex-row-reverse ">
+
+                                            <div class="pe-3"><div class="px-3 pt-2 pb-2 text-center" style="background:#f0f0f0;border-radius:20px;border:1px solid #dedede;min-width:50px"><span>@mess.Content</span></div></div>
+                                            <div class="flex-grow-1"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+                            else
+                            {
+                                <div>
+                                    <div class="pb-3"> 
+                                        <div class="d-flex">
+                                            <div class="ps-3 pe-2 d-flex align-items-end"><img id="avatarImage" style="width:30px;height:30px;border-radius:50%;object-fit:cover;" src="/img/@mess.Sender?.ProfilePictureUrl"></div>
+                                            <div><div class="px-3 pt-2 pb-2 text-center" style="background:#f0f0f0;border-radius:20px;border:1px solid #dedede;min-width:50px"><span>@mess.Content</span></div></div>
+                                            <div class="flex-grow-1"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+
+                        } 
+                    }
+                    
+                </div>
+                <div class="d-flex align-items-center w-100 pt-2 pb-2 px-3">
+                    <div class="d-flex gap-3 me-2">
+                        <i class="fa-solid fa-phone"></i>
+                        <i class="fa-solid fa-video"></i>
+                        <i class="fa-solid fa-ellipsis"></i>
+                    </div>
+                    <div class="flex-grow-1 me-2 d-flex align-items-center pt-2 pb-2 px-3" style="border:1px solid #dedede;border-radius:20px">
+                        <input type="text" class="w-100 mess-input"   name="name" value="" placeholder="Nhập tin nhắn" />
+                        <i class="fa fa-paper-plane" aria-hidden="true" id="send-message"></i>
+                    </div>
+                    <div><i class="fa-solid fa-heart"></i></div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        var currentUserName = "@User.Identity?.Name"; // Truyền giá trị từ server vào biến JS
+        var users = @Json.Serialize(Model?.Users)
+        
+    </script>
+    <script src="~/js/messenger.js"></script>
+
+}

@@ -1,0 +1,138 @@
+﻿html {
+  font-size: 14px;
+}
+body {
+
+    background-color: #f2f4f7;
+}
+button {
+    border: none;
+    outline: none;
+}
+a {
+    color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
+    text-decoration: none !important;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+    .psst {
+        position: sticky;
+        top: 78.4px;
+        height:calc(100vh-78.4px);
+    }
+   
+}
+@media (max-width:415px){
+    
+}
+li{
+    list-style-type:none;
+}
+ul{
+    padding:0;
+}
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+ 
+}
+a{}
+.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
+  color: var(--bs-secondary-color);
+  text-align: end;
+}
+input {
+    border: none;
+    outline: none; /* Xóa viền khi focus */
+}
+.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
+  text-align: start;
+}
+
+.bg-white{
+    background-color:#fff
+}
+.brpr {
+    border-radius: 10px;
+
+    border: 1px solid #dedede;
+}
+
+.arrow{
+    
+}
+.arrow1::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(315deg);
+    width: 15px;
+    height: 15px;
+    border-right: 3px solid #808080;
+    border-bottom: 3px solid #808080;
+    cursor: pointer
+}
+.arrow1 {
+    position: relative;
+    width:20px;
+    height:20px;
+    margin-right:5px;
+}
+.bravt:hover {
+    border-radius: 10px;
+    background-color: #f2f4f7;
+    cursor: pointer
+}
+.bravt.active {
+    border-radius: 10px;
+    background-color: #f2f4f7;
+    cursor: pointer
+}
+.online-status {
+    width: 10px;
+    height: 10px;
+    background-color: #00ff00; /* Màu xanh lá: Online */
+    border-radius: 50%;
+    border: 2px solid white;
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+}
+.text-small-line {
+    line-height: 1.1 !important
+}
+.text-thin-bold {
+    font-weight: 400; /* Tránh quá dày */
+    -webkit-text-stroke: 0.3px black; /* Viền nhẹ để tạo độ đậm */
+}
+.search-choose {
+    border-radius: 50%;
+    color: black;
+    height: 36px;
+    width: 36px;
+    background-color:#dedede;
+}
+.search-choose.active {
+        border-radius: 50%;
+        color: #fff;
+        height: 36px;
+        width: 36px;
+        background-color: #1877f2;
+}
+
+@media (max-width: 768px) {
+    .psst {
+        position: sticky;
+        top: 49.8px;
+    }
+}

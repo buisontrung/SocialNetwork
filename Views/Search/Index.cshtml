@@ -1,0 +1,148 @@
+﻿@model SocialNetwork.ViewModel.SearchViewModel
+<div class="d-flex flex-column flex-md-row align-items-start" style="min-height:89vh">
+    <div class="col-12 col-md-3 psst" style="background-color:#fff;overflow-y:auto;">
+        <div class="text-start m-3">
+            <h4 class="text-small-line fw-bold">
+                Kết quả tìm kiếm cho <br />
+                <span class="fs-6 fw-lighter text-break">@ViewBag.Query</span>
+            </h4>
+        </div>
+        <div>
+            <div class="px-3"><div class="w-100" style="border:1px solid #dedede"></div></div>
+            <div class="px-3 pt-2">
+                <span class="text-thin-bold" style="font-size:17px">Bộ lọc</span>
+            </div>
+            <div class="px-2 pt-2 pb-2">
+                <a asp-controller="Search" asp-action="Index" asp-route-q="@ViewBag.Query">
+                    <div class="p-2 d-flex align-items-center bravt @(ViewBag.Active == 1 ? "active" : "")">
+                        <div class="mb-1 mt-1 me-3">
+                            <div class="search-choose d-flex align-items-center justify-content-center @(ViewBag.Active == 1 ? "active" : "")">
+                                <i class="fa-solid fa-book"></i>
+                            </div>
+                        </div>
+
+                        <span class="flex-grow-1" style="color:black">Tất cả</span>
+                    </div>
+                </a>
+                <a asp-controller="Search" asp-action="Post" asp-route-q="@ViewBag.Query">
+                    <div class="p-2 d-flex align-items-center bravt @(ViewBag.Active == 2 ? "active" : "")">
+                        <div class="mb-1 mt-1 me-3">
+                            <div class="d-flex align-items-center justify-content-center search-choose @(ViewBag.Active == 2 ? "active" : "")">
+                                <i class="fa-solid fa-images"></i>
+                            </div>
+                        </div>
+
+                        <span class="flex-grow-1" style="color:black">Bài viết</span>
+                    </div>
+                </a>
+
+                <a asp-controller="Search" asp-action="People" asp-route-q="@ViewBag.Query">
+                    <div class="p-2 d-flex align-items-center bravt @(ViewBag.Active == 3 ? "active" : "")">
+                        <div class="mb-1 mt-1 me-3">
+                            
+                            <div class="d-flex align-items-center justify-content-center search-choose @(ViewBag.Active == 3 ? "active" : "")">
+                                <i class="fa-solid fa-images"></i>
+                            </div>
+                        </div>
+
+                        <span class="flex-grow-1" style="color:black">Mọi người</span>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="col-12 col-md-9 d-flex justify-content-center">
+        <div class="col-12 col-md-8 mt-3" >
+            @if(Model !=null && Model.users !=null && Model.users.Any()){
+                <div class="p-3" style="background-color:#fff;border-radius:10px;border: 1px solid #dedede;">
+                    <div><h5 class="fw-bold">Mọi người</h5></div>
+
+                    @foreach (var user in Model.users)
+                    {
+                        <div class="d-flex align-items-start">
+                            <div class="mt-2 mb-2 me-3">
+                                <div style="height: 60px; width: 60px; overflow: hidden;">
+                                    <img src="/img/@user.ProfilePictureUrl"
+                                    style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" />
+                                </div>
+
+                            </div>
+                            <div class="flex-grow-1">
+                                <div class="d-flex align-items-center pt-2 pb-2">
+                                    <div class="flex-grow-1">
+                                        <div><span class="fw-bold fs-5">@user?.FullName</span></div>
+                                        <div><span style="color:#9c9c9c">Sống tại @user?.Location</span></div>
+                                        <div class="pt-2" style="color:#9c9c9c"><span>@user?.CommonFriendsCount bạn chung</span></div>
+                                    </div>
+                                    <div class="ms-2">
+                                        @if (user?.IsFriend == true)
+                                        {
+                                            <button class="btn btn-outline-success">Bạn bè</button>
+                                        }
+                                        else
+                                        {
+                                            <button class="btn btn-primary">Thêm bạn bè</button>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    
+                        @if (ViewBag.Load)
+                        {
+                            <a asp-controller="Search" asp-action="people" asp-route-q="@ViewBag.Query">
+                                <div class="pt-2 pb-2 text-center" style="background-color:#e2e5e9;border-radius:10px;cursor:pointer;color:black">
+                                    Xem tất cả
+                                </div>
+                            </a>
+                        }
+                    
+
+
+                </div>
+            }
+            @if (Model != null && Model.posts != null && Model.posts.Any()) { 
+                @foreach(var post in Model.posts){
+                    <div class="mt-3 bg-white brpr pb-2 post" data-postid="@post.Id">
+                        <div class="d-flex p-3">
+                            <a class="me-2" href="/Profile/@post.User?.UserName">
+                                <img src="/img/@post.User?.ProfilePictureUrl" style="height:50px;width:50px;border-radius:50%">
+                            </a>
+                            <div class="flex-grow-1">
+                                <div><span class="fw-bold mb-1">@post.User?.FullName</span></div>
+                                <div><span style="font-size:12px" class="fw-bold bg-danger-subtle">@post.CreatedAt</span></div>
+                            </div>
+                            <div><i class="fa-solid fa-ellipsis"></i></div>
+                        </div>
+                        <div class="px-3 pb-3">
+                            <div><span>@post.Content</span></div>
+                        </div>
+                        @if (post?.ImageUrl != null)
+                        {
+                            <div class="px-5" style="background-color:beige">
+
+
+                                <img src="/img/@post.ImageUrl" style="width:100%;height:100%">
+                            </div>
+                        }
+                        <div class="px-3 pt-1 pb-1">
+                            <div>
+                                <i class="fa-solid fa-heart mx-1 like " id="@post?.Id" data-postid="@post?.Id"></i>
+                                <i class="fa-regular fa-comment mx1"></i>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span class="likesCount-15">@post?.LikesCount lượt thích</span>
+                                <span class="show-post " data-postid="15">@post?.CommentsCount bình luận</span>
+                            </div>
+                        </div>
+
+                    </div>
+                }
+            }
+           
+        </div>
+    </div>
+</div>

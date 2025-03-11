@@ -1,0 +1,23 @@
+﻿@model List<SocialNetwork.ViewModel.ConversationViewModel>
+@{
+    var currentConversationId = Context.Request.RouteValues["Id"]?.ToString(); // Lấy id từ URL
+}<div class="px-1 conversion-container">
+@foreach (var conversation in Model)
+{ 
+    var isActive = currentConversationId == conversation.Id.ToString() ? "active-conversation" : ""; // So sánh id
+    
+        <div class="@isActive d-flex w-100 pt-2 pb-2 px-2" data-converstation="@conversation.Id">
+            <a class="w-100" asp-controller="Messenger" asp-action="Index" asp-route-Id="@conversation.Id" style="color:#333">
+                <div class="d-flex">
+                    <img b-lh69jpwqls="" id="avatarImage" style="width:45px;height:45px;border-radius:50%;object-fit:cover;" src="/img/default-avatar.png">
+                    <div class="ms-2">
+                        <div><span class="m-0 fw-bold" style="color:#5e5e5e">@conversation.Name</span></div>
+                        <div><span class="m-0 @(conversation.IsRead==false?"fw-bold":"")">@conversation.NewMessage?.Content</span></div> <!-- Hiển thị tin nhắn mới nhất -->
+                    </div>
+                </div>
+            </a>
+
+        </div>
+
+}
+</div>

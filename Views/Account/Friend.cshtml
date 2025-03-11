@@ -1,0 +1,249 @@
+﻿@model SocialNetwork.ViewModel.ProfileViewModel
+@section Styles {
+    <link rel="stylesheet" href="~/css/profile.css" />
+}
+
+<div class="bg-white">
+    <div class="d-flex justify-content-center">
+        <div style="width:74%;min-height:500px;background:#dedede;border-radius:10px"></div>
+    </div>
+    <div class="d-flex justify-content-center" style="height: 150px">
+        <div class="d-flex justify-content-between px-3" style="width:70%;">
+            <style>
+                .first-element {
+                    height: 170px;
+                    width: 170px;
+                    position: relative;
+                    top: -50px;
+                    z-index: 100;
+                    border-radius: 50%;
+                    border: 5px solid #fff;
+                }
+
+                .friend-avatar {
+                    border-radius: 50%;
+                    border-left: 3px solid #fff;
+                    border-top: 3px solid #fff;
+                    border-bottom: 3px solid #fff;
+                    box-sizing: content-box;
+                }
+
+                .friend-img {
+                    border-radius: 50%;
+                    height: 30px;
+                    width: 30px;
+                }
+
+                .friend-avatar:not(:first-child) {
+                    margin-left: -10px;
+                }
+            </style>
+            @{
+                var imageUrl = string.IsNullOrEmpty(Model.User?.ProfilePictureUrl) ? "default-avatar.png" : Model.User?.ProfilePictureUrl;
+            }
+            <div class="first-element col-3" style="background-image: url('@Url.Content("~/img/"+imageUrl)'); background-size: cover; background-position: center;"></div>
+            <div class="col-3">
+                <div class="mt-3">
+                    <h2 class="fw-bold">@Model.User?.FullName</h2>
+                    <div>@Model.TotalFriendsCount người bạn</div>
+                    <div class="d-flex">
+                        @if (Model.Friends != null)
+                        {
+                            foreach (var friend in Model.Friends)
+                            {
+                                <div class="friend-avatar"><a class="dropdown-item" asp-controller="Account" asp-action="Profile" asp-route-username="@friend.UserName"><img src="~/img/@friend.ProfilePictureUrl" class="friend-img" /></a></div>
+
+                            }
+                        }
+
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="mt-3 float-end d-flex">
+                    @if (Model.IsFriend == false)
+                    {
+                        <button class=" me-2 p-2" style="background-color:#0d6efd;color:#fff;border-radius:10px;border-color:#0d6efd" id="add-friend-btn"><i class="fa-solid fa-plus" style="font-size:12px"></i><span>Thêm bạn bè</span></button>
+                    }
+
+                    <button class="btn-profile" id="edit-abc">Chỉnh sửa trang cá nhân</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="d-flex justify-content-center">
+        <div class="px-3" style="width:70%">
+            <div class="d-flex" style="border-top:1px solid #dedede;min-height:60px">
+                <a id="profile-link" class="profile-item" asp-controller="Account" asp-action="Profile" asp-route-userName ="@Model.User?.UserName"><div class="px-3 h-100 d-flex align-items-center"><span>Bài viết</span></div></a>
+                <a class="profile-item active"
+                   >
+                    <div class="px-3 h-100 d-flex align-items-center"><span>Bạn bè</span></div>
+                </a>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pb-3" style="background:#f2f4f7">
+    <div class="d-flex justify-content-center pt-4">
+        <div class="p-3" style="width:70%;min-height:500px;background-color:#fff">
+            <div class="d-flex justify-content-between">
+                <div><h4>Bạn bè</h4></div>
+                <div class="d-flex">
+                    <div class="px-2 mx-3 d-flex align-items-center" style="border-radius:20px;background-color:#dedede"><label><i class="fa-solid fa-search"></i></label><input id="search-input" type="text" style="background-color:#dedede" placeholder="Tìm kiếm" name="name" value="" /></div>
+                    <div class="mx-3 d-flex align-items-center"><a asp-controller="Friend" asp-action="index" style="font-weight:600;color:blue">Lời mời kết bạn</a></div>
+                    <div class="mx-3 d-flex align-items-center"><a asp-controller="Friend" asp-action="index" style="font-weight:600;color:blue">Tìm bạn bè</a></div>
+                    <div class="d-flex ms-3 align-items-center"><i class="fa-solid fa-ellipsis"></i></div>
+                </div>
+            </div>
+            <style>
+                .row-custom {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 10px; /* Khoảng cách giữa các cột */
+                }
+
+                    .row-custom > div {
+                        width: calc(50% - 5px); /* Trừ nửa khoảng cách giữa các cột */
+                    }
+            </style>
+
+            <div class="row-custom mt-3">
+                
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        let isLoading = false
+        let path = window.location.pathname.split('/'); // Tách thành mảng
+        let username = path[path.indexOf("Profile") + 1];
+        let pageIndex= 1;
+        const pageSize = 2;
+        let timeout = null;
+        function loadFriend() {
+            if (isLoading) return; // Nếu đang tải thì không gọi tiếp
+            isLoading = true; // Đánh dấu là đang tải
+
+            $.ajax({
+                url: `/Account/GetFriends?userName=${username}&pageIndex=${pageIndex}&pageSize=${pageSize}`,
+                method: "GET",
+                success: function (data) {
+                    let content = "";
+                    if (data.length === 0) {
+                        $(window).off("scroll"); // Không còn bài viết, tắt sự kiện cuộn
+
+                    } else {
+
+                        data.forEach(user => {
+
+
+
+
+                         
+                           
+                            content += `
+                                <div class="user p-3" style="border-radius:10px;border:1px solid #dedede">
+                                        <div class="d-flex justify-content-between w-100">
+
+                                            <div class="pe-3"><img src="/img/${user.profilePictureUrl}" alt="Alternate Text" style="width:90px;height:90px;border-radius:15px" /></div>
+                                            <div class="d-flex flex-column align-items-start justify-content-center flex-grow-1">
+                                                    <div>
+                                                        <span>${user.fullName}</span>
+                                                    </div>
+                                                    <div>
+                                                    <span style="font-size:14px;font-weight:600;color:#65686c">10 bạn chung</span>
+                                                    </div>
+                                            </div>
+
+
+                                            <div class="d-flex ms-3 align-items-center"><i class="fa-solid fa-ellipsis"></i></div>
+                                        </div>
+                                 </div>`;
+                        });
+                        $(".row-custom").append(content);
+                        pageIndex++; // Tăng trang để lần sau tải tiếp
+
+                        isLoading = false; // Đánh dấu tải xong
+                    }
+                }
+            });
+        }
+        window.addEventListener("scroll", function () {
+            if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 250) {
+                loadFriend();
+            }
+        });
+        $(document).ready(function () {
+            loadFriend(); // Gọi khi trang tải xong
+
+            seachFriends();
+            
+        });
+        function seachFriends(){
+            $("#search-input").on("input", function () {
+                clearTimeout(timeout);
+                let query = $(this).val().trim();
+
+                if (query.length === 0) {
+
+                    isLoading=false;
+                    $(".row-custom").html("");
+                    pageIndex=1;
+                    loadFriend();
+                    $(window).on("scroll");
+                    return;
+                }
+
+                $(window).off("scroll.loadFriendEvent");
+                timeout = setTimeout(() => {
+                    $.ajax({
+                        url:`/Account/SearchFriends?query=${query}&userName=${username}`,
+                        type: "GET",
+                        success: function (data) {
+                            let content = ""
+
+                            if (data.length === 0) {
+                                
+
+                                return;
+                            }
+
+                            data.forEach(user => {
+                                 content += `
+                                     <div class="user p-3" style="border-radius:10px;border:1px solid #dedede">
+                                            <div class="d-flex justify-content-between w-100">
+
+                                                <div class="pe-3"><img src="/img/${user.profilePictureUrl}" alt="Alternate Text" style="width:90px;height:90px;border-radius:15px" /></div>
+                                                <div class="d-flex flex-column align-items-start justify-content-center flex-grow-1">
+                                                        <div>
+                                                            <span>${user.fullName}</span>
+                                                        </div>
+                                                        <div>
+                                                        <span style="font-size:14px;font-weight:600;color:#65686c">10 bạn chung</span>
+                                                        </div>
+                                                </div>
+
+
+                                                <div class="d-flex ms-3 align-items-center"><i class="fa-solid fa-ellipsis"></i></div>
+                                            </div>
+                                     </div>`;
+                            });
+
+                            $(".row-custom").html(content);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Lỗi khi tìm kiếm:", error);
+                        }
+                    });
+                }, 300); // Debounce 300ms
+            });
+        }
+    </script>
+}

@@ -1,0 +1,100 @@
+﻿.btn-profile {
+    background-color: #e2e5e9;
+    border-radius: 10px;
+    padding: 5px 10px;
+    border-color: #dedede;
+    font-weight: 600;
+}
+
+    .btn-profile:hover {
+        background-color: #dedede;
+    }
+
+.grid-container {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 41% 57%;
+    gap: 10px; /* Khoảng cách giữa hai cột */
+    align-items: start; /* Đảm bảo mỗi cột có chiều cao theo nội dung */
+    position: relative
+}
+
+.active-Like {
+    color: red
+}
+
+#post-detail {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(234, 234, 234, 0.7); /* Màu nền tối với độ mờ */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Đảm bảo overlay nằm trên các phần tử khác */
+}
+
+body.no-scroll {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.show-post:hover {
+    text-decoration: underline;
+    cursor: pointer
+}
+
+.comment {
+}
+
+.post-detail-content {
+   
+}
+
+.detail-post {
+    max-height: 470px;
+    overflow-y: auto;
+    position: relative;
+}
+
+.send-comment-div {
+    position: absolute;
+    bottom: 0;
+}
+
+.left-column {
+    position: sticky;
+    top: -100px; /* Ban đầu bám theo màn hình khi cuộn */
+
+    overflow: auto; /* Cho phép cuộn nội dung bên trong */
+}
+.profile-item {
+    text-decoration: none
+}
+
+.profile-item.active {
+    border-bottom: 2px solid rgba(13,110,253,1)
+}
+.span-friend:hover {
+    text-decoration: underline;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.block {
+    cursor: not-allowed;
+    background-color: rgba(234, 234, 234, 0.7);
+}
+.accept {
+    cursor: pointer;
+    background-color:blue;
+    color:#fff
+}
+.content-post{
+    max-height:200px;
+    overflow-y:auto;
+}

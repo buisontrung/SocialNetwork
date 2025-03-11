@@ -1,0 +1,788 @@
+﻿@model IEnumerable<SocialNetwork.Models.Post>
+@{
+    ViewData["Title"] = "Home Page";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/profile.css" />
+}
+<div class="p-4">
+    <div class="col-12 d-flex h-100 home">
+        <div class="col-3 d-md-block d-none h-100">
+            <div class="d-flex px-2 bravt"><div class="mb-1 mt-1 me-3"><img class="avatarImage" style="width:36px;height:36px;border-radius:50%;object-fit:cover;"></div><div class="d-flex align-items-center"><span>@ViewBag.fullName</span></div></div>
+            <div class="d-flex mt-1 px-2 bravt">
+                <div class="mb-1 mt-1 me-3 d-flex">
+                    <i data-visualcompletion="css-img" class="" style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v4/yw/r/-GSeaf19sqF.png&quot;);background-position: 0px -333px;background-size: auto;width: 36px;height: 36px;background-repeat: no-repeat;display: inline-block;"></i>
+                </div>
+                <div class="d-flex align-items-center"><span><a asp-controller="friend" asp-action="Index">Bạn bè</a></span></div>
+            </div>
+            <div class="d-flex mt-1 px-2 bravt">
+                <div class="mb-1 mt-1 me-3 d-flex">
+                    <i data-visualcompletion="css-img" class="" style="background-image:url('https://static.xx.fbcdn.net/rsrc.php/v4/yw/r/-GSeaf19sqF.png');background-position:0 -481px;background-size:auto;width:36px;height:36px;background-repeat:no-repeat;display:inline-block"></i>
+                </div>
+                <div class="d-flex align-items-center"><span><a asp-controller="friend" asp-action="Index">Kỷ niệm</a></span></div>
+            </div>
+            <div class="d-flex mt-1 px-2 bravt">
+                <div class="mb-1 mt-1 me-3 d-flex">
+                    <i data-visualcompletion="css-img" class="" style="background-image:url('https://static.xx.fbcdn.net/rsrc.php/v4/yw/r/-GSeaf19sqF.png');background-position:0 -185px;background-size:auto;width:36px;height:36px;background-repeat:no-repeat;display:inline-block"></i>
+                </div>
+                <div class="d-flex align-items-center"><span><a asp-controller="friend" asp-action="Index">Đã lưu</a></span></div>
+            </div>
+            <div class="d-flex px-2 mt-1 bravt">
+                <div class="mb-1 mt-1 me-3 d-flex">
+                    <i data-visualcompletion="css-img" class="" style="background-image:url('https://static.xx.fbcdn.net/rsrc.php/v4/yw/r/-GSeaf19sqF.png');background-position:0 -37px;background-size:auto;width:36px;height:36px;background-repeat:no-repeat;display:inline-block"></i>
+                </div>
+                <div class="d-flex align-items-center"><span><a asp-controller="friend" asp-action="Index">Nhóm</a></span></div>
+            </div>
+            <div class="d-flex px-2 mt-1 bravt">
+                <div class="mb-1 mt-1 me-3 d-flex">
+                    <i data-visualcompletion="css-img" class="" style="background-image:url('https://static.xx.fbcdn.net/rsrc.php/v4/yw/r/-GSeaf19sqF.png');background-position:0 -555px;background-size:auto;width:36px;height:36px;background-repeat:no-repeat;display:inline-block"></i>
+                </div>
+                <div class="d-flex align-items-center"><span><a asp-controller="friend" asp-action="Index">Video</a></span></div>
+            </div>
+            <div class="d-flex px-2 mt-1 bravt">
+                <div class="mb-1 mt-1 me-2 d-flex">
+                    <img draggable="false" height="36" width="36" alt="" class="xz74otr" referrerpolicy="origin-when-cross-origin" src="https://static.xx.fbcdn.net/rsrc.php/v4/yb/r/eECk3ceTaHJ.png">
+                </div>
+                <div class="d-flex align-items-center"><span><a asp-controller="friend" asp-action="Index">Bảng feed</a></span></div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 h-100 d-flex flex-row px-4 justify-content-center align-items-md-stretch">
+            <div class="col-11" id="postsContainer">
+
+                <div class="p-3" style="background-color:#fff;border-radius:10px">
+                    <div class="d-flex">
+                        <a class="me-2" href="Profile/buisontrung"><img class="avatarImage" alt="Alternate Text" style="height:50px;width:50px;border-radius:50%"></a>
+                        <input id="add-post" class="flex-grow-1 px-3 text-lg-start" style="border-radius:30px;background-color:#e7e9eb" type="button" name="name" value="Bạn đang nghĩ gì">
+                    </div>
+                    <div class="d-flex mt-3 pt-3" style="border-top:1px solid #dedede">
+                        <div class="col-4 text-center">
+                            <span class="me-1"><i class="fa-solid fa-video" style="font-size:20px;color:red"></i></span>
+                            <span>Video trực tiếp</span>
+                        </div>
+                        <div class="col-4 text-center">
+                            <span class="me-1"><i class="fa-solid fa-image" style="font-size:20px;color:green"></i></span>
+                            <span>Ảnh video</span>
+                        </div>
+                        <div class="col-4 text-center">
+                            <span class="me-1"><i class="fa-solid fa-flag" style="font-size:20px;color:blue"></i></span>
+                            <span>Sự kiện trong đời</span>
+                        </div>
+                    </div>
+                    
+                </div>
+                @foreach(var post in Model){
+                    <div class="mt-3 bg-white brpr pb-2 post" data-postid="@post.Id">
+                        <div class="d-flex p-3">
+                            <a class="me-2" href="Profile/@post?.User?.UserName">
+                                <img src="/img/@post?.User?.ProfilePictureUrl" style="height:50px;width:50px;border-radius:50%">
+                            </a>
+                            <div class="flex-grow-1">
+                                <div><span class="fw-bold mb-1">@post?.User?.FullName</span></div>
+                                <div><span style="font-size:12px" class="fw-bold bg-danger-subtle">@post?.CreatedAt</span></div>
+                            </div>
+                            <div><i class="fa-solid fa-ellipsis"></i></div>
+                        </div>
+                        <div class="px-3 pb-3">
+                            <div><span>@post?.Content</span></div>
+                        </div>
+                        @if(post?.ImageUrl != null){
+                            <div class="px-5" style="background-color:beige">
+
+
+                                <img src="/img/@post.ImageUrl" style="width:100%;height:100%">
+                            </div>
+                        }
+                        <div class="px-3 pt-1 pb-1">
+                            <div>
+                                <i class="fa-solid fa-heart mx-1 like @(post?.IsLiked ==true ?"active-Like":"")  " id="@post?.Id" data-postid="@post?.Id"></i>
+                                <i class="fa-regular fa-comment mx1"></i>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span class="likesCount-@post?.Id">@post?.LikesCount lượt thích</span>
+                                <span class="show-post " data-postid="@post?.Id">@post?.CommentsCount bình luận</span>
+                            </div>
+                        </div>
+
+                    </div>
+                }
+               
+            </div>
+
+        </div>
+        <div class="col-3 d-md-block d-none h-100 friend-list">
+           <div class="d-flex justify-content-between p-2 mb-2" style="border-bottom:1px solid #dedede">
+               <div><span>Bạn bè</span></div>
+                <div><i b-lh69jpwqls="" class="fas fa-search"></i></div>
+           </div>
+            
+        </div>
+    </div>
+    <div class="d-none" id="post-detail">
+    </div>
+</div>
+@section Scripts {
+    <script>
+        let pageIndex=3;
+        const pageSize = 2;
+        const pageSizeCmt = 5;
+        let pageIndexCmt = 2;
+        let isLoadingCmt = false;
+        let isLoading=false;
+        let connectionPost;
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/friendHub") // URL của SignalR Hub
+            .withAutomaticReconnect()
+            .configureLogging(signalR.LogLevel.Information)
+            .build();
+
+        async function startConnection() {
+            try {
+                await connection.start();
+                console.log("Kết nối thành công!");
+            } catch (err) {
+                console.error("Lỗi kết nối: ", err);
+                setTimeout(startConnection, 5000); // Nếu lỗi, thử lại sau 5s
+            }
+        }
+
+        connection.onclose(() => {
+            console.log("Mất kết nối! Đang thử lại...");
+            startConnection();
+        });
+
+        // Khi bạn bè online, cập nhật UI
+        connection.on("FriendOnline", (userId) => {
+            if (document.getElementById(`fr-${userId}`)) {
+                $(`#fr-${userId} .online-status`).removeClass('d-none');
+                return;
+            }
+                $.ajax({
+                    url: `/Friend/GetFriend?friendId=${userId}`,
+                    method: "GET",
+                    success: function (data) {
+                           const content = `
+                               <div class="d-flex px-2 pt-1 pb-1 bravt" id="fr-${data.id}">
+                                    <div class="mb-1 mt-1 me-2" style="position:relative">
+                                        <img class="avatarImage" style="width:36px;height:36px;border-radius:50%;object-fit:cover;" src="/img/${data.profilePictureUrl}">
+                                         <div class="online-status"></div>
+                                    </div>
+                                    <div class="d-flex align-items-center"><span>${data.fullName}</span></div>
+                                </div>`
+
+                            $(".friend-list").append(content)
+
+                    }
+
+
+                })
+           
+            
+        });
+
+        // Khi bạn bè offline, cập nhật UI
+        connection.on("FriendOffline", (userId) => {
+            console.log(`Bạn ${userId} đã offline!`);
+            $(`#fr-${userId} .online-status`).addClass('d-none');
+        });
+        connection.on("ReceiveOnlineFriends", (onlineFriends) => {
+            console.log("Danh sách userId bạn bè online:", onlineFriends);
+            if(onlineFriends.length===0){
+                return;
+            }
+
+                let queryString = onlineFriends.map(id => `userIds=${encodeURIComponent(id)}`).join("&");
+
+                $.ajax({
+                    url: `/Friend/getFriends?${queryString}`,
+                    method: "GET",
+                    success: function (friends) {
+                        console.log("Thông tin bạn bè online:", friends);
+
+                        friends.forEach(friend => {
+                            if (!document.getElementById(`fr-${friend.userId}`)) {
+                                const content = `
+                                <div class="d-flex px-2 pt-1 pb-1 bravt position-relative" id="fr-${friend.userId}">
+                                    <div class="mb-1 mt-1 me-2 position-relative">
+                                        <img class="avatarImage" style="width:36px;height:36px;border-radius:50%;object-fit:cover;" src="/img/${friend.profilePictureUrl}">
+                                        <div class="online-status online"></div>
+                                    </div>
+                                    <div class="d-flex align-items-center"><span>${friend.fullName}</span></div>
+                                </div>`;
+                                $(".friend-list").append(content);
+                            } else {
+                                $(`#fr-${friend.userId} .online-status`).removeClass("offline").addClass("online");
+                            }
+                        });
+                    },
+                    error: function (err) {
+                        console.error("Lỗi khi lấy thông tin bạn bè online:", err);
+                    }
+                });
+            
+        });
+        startConnection();
+            function loadPosts() {
+            if (isLoading) return; // Nếu đang tải thì không gọi tiếp
+            isLoading = true; // Đánh dấu là đang tải
+
+            $.ajax({
+                url: `/Home/GetFriendPosts?pageIndex=${pageIndex}&pageSize=${pageSize}`,
+                method: "GET",
+                success: function (data) {
+                    let content = "";
+                    console.log(data)
+                    if (data.length === 0) {
+                        $(window).off("scroll"); // Không còn bài viết, tắt sự kiện cuộn
+
+                    } else {
+
+                        data.forEach(post => {
+
+                            
+
+
+                            let createdAt = new Date(post.createdAt).toLocaleString("vi-VN");
+   
+                            content += `
+                            <div class="mt-3 bg-white brpr pb-2 post" data-postid="${post.id}">
+                                <div class="d-flex p-3">
+                                    <a class="me-2" href="Profile/${post.user?.fullName}">
+                                        <img src="/img/${post.user?.profilePictureUrl}"
+                                            style="height:50px;width:50px;border-radius:50%" />
+                                    </a>
+                                    <div class="flex-grow-1">
+                                        <div><span class="fw-bold mb-1">${post.user.fullName}</span></div>
+                                        <div><span style="font-size:12px" class="fw-bold bg-danger-subtle">${createdAt}</span></div>
+                                    </div>
+                                    <div><i class="fa-solid fa-ellipsis"></i></div>
+                                </div>
+                                <div class="px-3 pb-3">
+                                    <div><span>${post.content}</span></div>
+                                </div>
+                                <div class="px-5" style="background-color:beige">
+
+
+                                ${post.imageUrl ? `<img src="/img/${post.imageUrl}" style="width:100%;height:100%" />` : ""}
+                                </div>
+                                <div class="px-3 pt-1 pb-1" >
+                                    <div>
+                                        <i class="fa-solid fa-heart mx-1 like ${post.isLiked ? "active-Like":"" }" id="${post.id}" data-postid="${post.id}"></i>
+                                        
+                                        <i class="fa-regular fa-comment mx1"></i>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <span class="likesCount-${post.id}">${post.likesCount} lượt thích</span>
+                                        <span class="show-post ${post.isLiked?"is-like":""}" data-postid="${post.id}">${post.commentsCount} bình luận</span>
+                                    </div>
+                                </div>
+
+                            </div>`;
+                        });
+                        $("#postsContainer").append(content);
+                        pageIndex++; // Tăng trang để lần sau tải tiếp
+                        isLoading = false; // Đánh dấu tải xong
+                    }
+                }
+            });
+        }
+        function loadPostDetail(id) {
+
+
+            $.ajax({
+                url: `/Account/GetPostDetail?postId=${id}`,
+                method: "GET",
+                success: function (data) {
+                    console.log(data)
+                    $("#post-detail").removeClass("d-none");
+                    var  createdAt = new Date(data.post.createdAt).toLocaleString("vi-VN")
+                    let content = `
+                        <div class="post-detail-content mb-3 bg-white brpr col-5">
+
+                            <div>
+                                <div class="d-flex p-3">
+                                    <a class="me-2" href="">
+
+                                        <img src="/img/${data.post.user?.profilePictureUrl}" alt="User Image" style="height:40px;width:40px;border-radius:50%" />
+                                    </a>
+                                    <div class="flex-grow-1">
+                                        <div>
+                                            <span class="fw-bold mb-1">${data.post.user?.fullName}</span>
+                                        </div>
+                                        <div>
+                                            <span style="font-size:12px" class="fw-bold bg-danger-subtle">${createdAt}</span>
+                                        </div>
+                                    </div>
+                                    <div> <button class="close-btn" data-postid="${data.post.id}" style="border:none; background:none; font-size:18px; cursor:pointer;">✖</button></div>
+                                </div>
+                                <div class="detail-post" data-postid="${data.post.id}">
+                                    <div class="px-3 pb-3">
+                                        <div class=""><span>${data.post.content}</span></div>
+                                    </div>
+                                    <div class="px-5" style="background-color:beige">
+
+                                              ${data.post.imageUrl !=null?`<img src="/img/${data.post.imageUrl}" style="width:100%;height:100%" />`:""}
+
+                                    </div>
+                                    <div class="px-3 pt-1 pb-1">
+                                        <div>
+                                            <i class="fa-solid fa-heart mx-1 like ${data.isLiked?"active-Like":""}" data-postid="${data.post.id}"></i>
+                                            <i class="fa-regular fa-comment mx1"></i>
+                                        </div>
+                                        <div class="d-flex justify-content-between" style="border-bottom:1px solid #dedede">
+                                            <span class="likesCount-${data.post.id}">${data.post.likesCount} lượt thích</span>
+                                            <span>${data.post.commentsCount} bình luận</span>
+                                        </div>
+                                    </div>
+                                    <div class="comment">
+                                            ${data.post.comments.map(comment => `
+                                                    <div class="px-3 pt-2 d-flex">
+                                                        <div>
+                                                            <a class="me-2" href="Profile/${comment.user.fullName}">
+                                                                <img src="/img/${comment.user.profilePictureUrl}" alt="Alternate Text" style="height:35px;width:35px;border-radius:50%" />
+                                                            </a>
+                                                        </div>
+                                                        <div class="flex-grow-1 d-flex flex-column align-items-start">
+                                                            <div class="p-2" style="border:1px solid #dedede;border-radius:15px;background-color:#f0f2f5">
+                                                                <div><span style="font-weight:600;font-size:14px">${comment.user.fullName}</span></div>
+                                                                <div><span style="font-size:14px">${comment.content}</span></div>
+                                                            </div>
+                                                            <ul class="d-flex mb-0 ps-2" style="font-size:12px;color:#6c6f73">
+                                                                <li class="pe-1 fw-bold">${formatTimeAgo(comment.createdAt)}</li>
+                                                                <li class="pe-1 fw-bold">Thích</li>
+                                                                <li class="pe-1 fw-bold">Phản hồi</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                `).join('')}
+
+
+                                         </div>
+                                    </div>
+                                    <div class="px-3 pt-2 pb-3 d-flex" style="border-top:1px solid #dedede;">
+                                        <div>
+                                            <a class="me-2" href="Profile/@User.Identity?.Name"><img src="/img/@ViewBag.imageUrl" alt="Alternate Text" style="height:35px;width:35px;border-radius:50%" /></a>
+                                        </div>
+                                        <div class="flex-grow-1" style="border-radius:15px;background-color:#f0f2f5">
+                                            <input class="w-100 p-2 input-cmt" type="text" style="background-color:#f0f2f5" placeholder="Viết bình luận..."/>
+                                            <div class="d-flex justify-content-between p-2">
+                                                <div class="d-flex">
+                                                    <i class="fa-solid fa-image pe-1" style="font-size:15px;color:gray"></i>
+                                                    <i class="fa-solid fa-image pe-1" style="font-size:15px;color:gray"></i>
+                                                    <i class="fa-solid fa-image pe-1" style="font-size:15px;color:gray"></i>
+                                                    <i class="fa-solid fa-image pe-1" style="font-size:15px;color:gray"></i>
+                                                    <i class="fa-solid fa-image pe-1" style="font-size:15px;color:gray"></i>
+                                                </div>
+                                                <div>
+                                                    <i class="fa-regular fa-paper-plane send-cmt" data-postid=${data.post.id}></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                    // Xóa nội dung cũ, sau đó thêm nội dung mới và hiển thị
+                   $("#post-detail").html(content)
+                   attachScrollEvent();
+
+                }
+            });
+        }
+        function attachScrollEvent() {
+            $(".detail-post").off("scroll").on("scroll", function () {
+                let postId = $(this).data("postid");
+
+                if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight - 50) {
+
+                    loadMoreComments(postId);
+                }
+            });
+        }
+        function formatTimeAgo(createdAt) {
+               const now = new Date();
+               createdAt = createdAt+"Z"
+               const createdDate = new Date(createdAt);
+
+               const diffInMilliseconds = now.getTime() - createdDate.getTime();
+               const diffInSeconds = Math.floor(diffInMilliseconds / 1000); // Chuyển đổi sang giây
+
+               // Nếu mới vừa đăng
+               if (diffInSeconds < 60) {
+                   return `${diffInSeconds} giây trước`;
+               }
+
+               const diffInMinutes = Math.floor(diffInSeconds / 60); // Chuyển sang phút
+               // Nếu vài phút trước
+               if (diffInMinutes < 60) {
+                   return `${diffInMinutes} phút trước`;
+               }
+
+               const diffInHours = Math.floor(diffInMinutes / 60); // Chuyển sang giờ
+               // Nếu vài giờ trước
+               if (diffInHours < 24) {
+                   return `${diffInHours} giờ trước`;
+               }
+
+               const diffInDays = Math.floor(diffInHours / 24); // Chuyển sang ngày
+               // Nếu vài ngày trước
+               if (diffInDays < 30) {
+                   return `${diffInDays} ngày trước`;
+               }
+
+               const diffInMonths = now.getMonth() - createdDate.getMonth() + 12 * (now.getFullYear() - createdDate.getFullYear());
+               // Nếu vài tháng trước
+               if (diffInMonths < 12) {
+                   return `${diffInMonths} tháng trước`;
+               }
+
+               const diffInYears = now.getFullYear() - createdDate.getFullYear(); // Chuyển sang năm
+               // Nếu vài năm trước
+               return `${diffInYears} năm trước`;
+        }
+        function loadMoreComments(postId) {
+
+            if(isLoadingCmt) return
+            isLoadingCmt = true
+            console.log(pageIndexCmt)
+            $.ajax({
+                url: `/Comment/RenderComment?postId=${postId}&pageIndex=${pageIndexCmt}&pageSize=${pageSizeCmt}`,
+                type: "GET",
+                success: function (data) {
+                    
+                    let content = "";
+                    if (data.length === 0) {
+                        $(".detail-post").off("scroll"); // Ngừng sự kiện scroll khi không còn dữ liệu
+                    } else {
+                        data.forEach(comment => {
+                            content += `
+                                <div class="px-3 pt-2 d-flex">
+                                    <div>
+                                        <a class="me-2" href="Profile/${comment.user.fullName}">
+                                            <img src="/img/${comment.user.profilePictureUrl}" alt="User Image" style="height:35px;width:35px;border-radius:50%" />
+                                        </a>
+                                    </div>
+                                    <div class="flex-grow-1 d-flex flex-column align-items-start">
+                                        <div class="p-2" style="border:1px solid #dedede;border-radius:15px;background-color:#f0f2f5">
+                                            <div><span style="font-weight:600;font-size:14px">${comment.user.fullName}</span></div>
+                                            <div><span style="font-size:14px">${comment.content}</span></div>
+                                        </div>
+                                        <ul class="d-flex mb-0 ps-2" style="font-size:12px;color:#6c6f73">
+                                            <li class="pe-1 fw-bold">${formatTimeAgo(comment.createdAt)}</li>
+                                            <li class="pe-1 fw-bold">Thích</li>
+                                            <li class="pe-1 fw-bold">Phản hồi</li>
+                                        </ul>
+                                    </div>
+                                </div>`;
+                        });
+
+                        $(".comment").append(content);
+                        isLoadingCmt=false
+                        pageIndexCmt++; // Tăng chỉ mục trang để tải tiếp
+                    }
+                },
+                error: function (xhr) {
+                    console.log(xhr.responseText);
+                }
+            });
+        }
+        window.addEventListener("scroll", function () {
+            if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 50) {
+                loadPosts();
+            }
+        });
+
+        $(document).on("click", ".close-btn", function() {
+            var postId = $(this).data("postid");
+            pageIndexCmt = 2;
+            isLoadingCmt = false;
+            console.log(isLoading)
+            if (connectionPost) {
+                console.log(postId)
+                connectionPost.invoke("LeavePostGroup", parseInt(postId))
+                .then(() => {
+                console.log(`👋 Rời nhóm post-${postId}`);
+                return connectionPost.stop();
+                })
+                .then(() => {
+                console.log("🔌 Đã đóng kết nối SignalR");
+                connectionPost = null;
+                })
+                .catch(err => console.error("Lỗi khi rời nhóm hoặc đóng kết nối:", err));
+            }
+            document.body.classList.remove("no-scroll");
+            $("#post-detail").addClass("d-none");
+        });
+         $("#add-post").on('click',function(){
+             $("#post-detail").removeClass("d-none");
+            var content = `<div class="mb-3 bg-white brpr" style="width:35%">
+                        <div class="p-3">
+                            <div class="text-center pb-2 mb-3" style="border-bottom:1px solid #dedede"><h3 class="fs-4">Tạo bài viết</h3></div>
+                            <div class="d-flex">
+                                <a class="me-2" href="Profile/@User.Identity?.Name"><img src="/img/@ViewBag.imageUrl" alt="Alternate Text" style="height:50px;width:50px;border-radius:50%" /></a>
+                                <div><span class="fw-bold">@ViewBag.FullName</span></div>
+                            </div>
+                            <div class="content-post">
+                                <div>
+                                    <div class="pb-4 pt-2">
+                                        <textarea
+                                             style="width: 100%;
+                                               overflow: hidden;
+                                               resize: vertical;
+                                               max-height:500px;
+                                               min-height:100px;
+                                               resize: none;
+                                               border: none;
+                                               outline: none;
+                                               background-color: transparent;"
+                                            id="add-content" class="w-100 text-lg-start" type="text" style="word-break: break-word; white-space: pre-wrap;" name="name" placeholder="Bạn đang nghĩ gì"></textarea>
+                                    </div>
+                               </div>
+
+
+                               <img id="previewImage" class="p-2 brpr" src="" alt="Ảnh xem trước" style="max-width: 100%;height:auto; display: none;">
+                            </div>
+
+
+                            <div class="d-flex mt-3 pt-3 pb-3 px-2" style="border:1px solid #dedede;border-radius:10px">
+                                <div class="col-6 text-center ">
+                                    <span class="me-1 fw-bold">Thêm vào bài viết của bạn</span>
+
+                                </div>
+                                <div class="col-6 d-flex justify-content-between flex-row-reverse">
+                                        <span class="me-1 file-upload-btn">
+                                            <i class="fa-solid fa-image" style="font-size:20px;color:green;cursor:pointer;"></i>
+                                        </span>
+
+                                        <!-- Input file (ẩn) -->
+                                        <input type="file" id="fileInput" style="display: none;" accept="image/*">
+
+                                        <!-- Khu vực xem trước ảnh -->
+
+
+                                </div>
+
+                            </div>
+                             <div class="d-flex mt-3 pt-2 pb-2 px-2 text-center block" id="post-btn" style="border-radius:10px">
+
+                                    <span class="me-1 fw-bold w-100 ">Đăng</span>
+
+
+
+
+                            </div>
+                        </div>
+                    </div>`
+                    $("#post-detail").html(content)
+            // Gửi dữ liệu qua AJAX
+
+        });
+        $(document).on("click", ".file-upload-btn", function () {
+                $("#fileInput").trigger("click");
+        });
+        $(document).on("input", "#add-content", function () {
+                this.style.height = "auto";
+                this.style.height = (this.scrollHeight) + "px";
+                var text = $(this).val().trim();
+                if (text.length > 0) {
+                        $("#post-btn").removeClass("block");
+                        $("#post-btn").addClass("accept");
+
+                }else {
+
+                        $("#post-btn").removeClass("accept");
+                        $("#post-btn").addClass("block");
+                }
+            });
+                $(document).on("click", "#post-btn", async function () {
+            let content = $("#add-content").val().trim();
+            let fileInput = $("#fileInput")[0];
+            let file = fileInput.files.length > 0 ? fileInput.files[0] : null;
+
+            if (!content && !file) {
+                alert("Vui lòng nhập nội dung hoặc chọn ảnh!");
+                return;
+            }
+
+            // Tạo FormData để gửi file và nội dung
+            let formData = new FormData();
+            formData.append("content", content);
+            if (file) {
+                formData.append("file", file); // Thêm file vào FormData
+            }
+
+            $.ajax({
+                url: "/Account/AddPost",
+                type: "POST",
+                data: formData,
+                processData: false,  // Không xử lý dữ liệu (vì FormData đã xử lý)
+                contentType: false,  // Không đặt Content-Type để trình duyệt tự động thêm `multipart/form-data`
+                success: function (response) {
+                    alert("Bài viết đã được đăng!");
+                    location.reload();
+                },
+                error: function (xhr) {
+                    console.error("Lỗi đăng bài:", xhr.responseText);
+                    alert("Đăng bài thất bại: " + xhr.responseText);
+                }
+            });
+        });
+        $(document).on("change", "#fileInput", function () {
+                if (this.files.length > 0) {
+                let file = this.files[0];
+                let reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $("#previewImage").attr("src", e.target.result).show(); // Hiển thị ảnh
+                };
+
+                reader.readAsDataURL(file); // Đọc file ảnh
+                console.log(file)
+                }
+             });
+
+            //Khi nhấn Like
+            $(document).on("click", ".like", function(){
+                var postId = $(this).data("postid");
+
+                var $this = $(this);
+
+                // Kiểm tra trạng thái like
+                if ($this.hasClass("active-Like")) {
+                    // Nếu đã thích, bỏ lớp active-Like và làm giảm số lượt thích
+                    $(".show-post").removeClass("is-like")
+                    $(`#${postId}`).removeClass("active-Like")
+                    $this.removeClass("active-Like");
+                } else {
+                    // Nếu chưa thích, thêm lớp active-Like và tăng số lượt thích
+                    $this.addClass("active-Like");
+                    $(".show-post").addClass("is-like")
+                    $(`#${postId}`).addClass("active-Like")
+                }
+
+            // Gửi dữ liệu qua AJAX
+                $.ajax({
+                    url: "/Account/AddLike",
+                    type: "POST",
+                    data: { postId: postId },
+                    success: function(response) {
+                        // Cập nhật số lượt thích
+                        $(".likesCount-" + postId).text(response.likesCount + " Lượt thích");
+                    },
+                    error: function() {
+                        alert("Có lỗi xảy ra, vui lòng thử lại!");
+                    }
+                });
+            });
+            //Khi người dùng nhấn vào chi tiết bài viết
+            $(document).on("click", ".show-post", function() {
+                var postId = $(this).data("postid");
+                console.log(postId)
+               // document.body.classList.add("no-scroll");
+                loadPostDetail(postId);
+                startSignalR(postId);
+            });
+            $(document).on("click", ".close-btn", function() {
+                var postId = $(this).data("postid");
+                pageIndexCmt = 2;
+                isLoadingCmt = false;
+                console.log(isLoading)
+                if (connection) {
+                    connection.invoke("LeavePostGroup", postId)
+                    .then(() => {
+                    console.log(`👋 Rời nhóm post-${postId}`);
+                    return connection.stop();
+                    })
+                    .then(() => {
+                    console.log("🔌 Đã đóng kết nối SignalR");
+                    connection = null;
+                    })
+                    .catch(err => console.error("Lỗi khi rời nhóm hoặc đóng kết nối:", err));
+                }
+                document.body.classList.remove("no-scroll");
+                $("#post-detail").addClass("d-none");
+            });
+
+
+            $(document).on("click", ".send-cmt", function() {
+                 var content = $(".input-cmt").val();
+                 var postId = $(this).data("postid")
+                 if (!content.trim()) {
+                    alert("Nội dung bình luận không được để trống!");
+                    return;
+                 }
+
+                $.ajax({
+                    url: "/Comment/AddComment",
+                    type: "POST",
+                    data: { postId: postId, content: content },
+                    success: function(response) {
+                          alert("Bình luận đã được gửi!");
+                        $(".input-cmt").val(""); // Xóa nội dung sau khi gửi
+                    },
+                    error: function(xhr) {
+
+                        console.log(xhr.responseText)
+                    }
+                });
+            });
+        function startSignalR(postId) {
+                if (connectionPost && connectionPost.state === "Connected") {
+                    console.log("⚠️ SignalR đã được kết nối, không tạo lại!");
+                    return;
+                }
+
+                connectionPost = new signalR.HubConnectionBuilder()
+                    .withUrl("/commentHub")  // Kết nối với Hub
+                    .withAutomaticReconnect() // Tự động kết nối lại khi bị mất kết nối
+                    .build();
+
+                // Nhận dữ liệu khi có bình luận mới
+                connectionPost.on("ReceiveComment", (comment) => {
+                    if (!comment || !comment.user) {
+                        console.error("❌ Dữ liệu bình luận không hợp lệ:", comment);
+                        return;
+                    }
+                    var createAt = comment.createdAt
+                     console.log(comment.createdAt)
+                    comment.createdAt=createAt.replace("Z", "");
+                    console.log(comment.createdAt)
+
+                    var content =  `
+                                    <div class="px-3 pt-2 d-flex">
+                                        <div>
+                                            <a class="me-2" href="Profile/${encodeURIComponent(comment.user.fullName)}">
+                                                <img src="/img/${comment.user.profilePictureUrl}"
+                                                     alt="User Image"
+                                                     style="height:35px;width:35px;border-radius:50%" />
+                                            </a>
+                                        </div>
+                                        <div class="flex-grow-1 d-flex flex-column align-items-start">
+                                            <div class="p-2" style="border:1px solid #dedede;border-radius:15px;background-color:#f0f2f5">
+                                                <div><span style="font-weight:600;font-size:14px">${comment.user.fullName}</span></div>
+                                                <div><span style="font-size:14px">${comment.content}</span></div>
+                                            </div>
+                                            <ul class="d-flex mb-0 ps-2" style="font-size:12px;color:#6c6f73">
+                                                <li class="pe-1 fw-bold">${formatTimeAgo(comment.createdAt)}</li>
+                                                <li class="pe-1 fw-bold">Thích</li>
+                                                <li class="pe-1 fw-bold">Phản hồi</li>
+                                            </ul>
+                                        </div>
+                                    </div>`;
+                    $(".comment").append(content);
+                });
+
+                // Xử lý kết nối thành công
+                connectionPost.start()
+                    .then(() => {
+                           console.log("✅ SignalR kết nối thành công");
+                           return connectionPost.invoke("JoinPostGroup", postId); // Đợi kết nối hoàn thành rồi mới gọi
+                    })
+                    .catch(err => console.error("❌ Lỗi kết nối SignalR:", err));
+
+            }
+        
+    </script>
+}

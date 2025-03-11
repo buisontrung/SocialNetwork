@@ -1,0 +1,28 @@
+﻿.row-custom-mess {
+    display: grid;
+    width: 100%;
+    grid-template-columns: calc(4% - 10px) calc(36% - 10px) calc(60% - 10px);
+    gap: 15px; /* Khoảng cách giữa hai cột */
+    align-items: start; /* Đảm bảo mỗi cột có chiều cao theo nội dung */
+
+    box-sizing: border-box;
+}
+.active-conversation {
+    background-color: #f0f0f0;
+    border-radius:8px;
+}
+@media (max-width: 500px) {
+    .row-custom-mess {
+        grid-template-columns: 5% 93% 0; /* Ẩn cột 1 bằng cách đặt chiều rộng của nó là 0 */
+    }
+}
+.fghjx{
+    height:calc(100vh - 78.4px)
+}
+.mess-user {
+    overflow-y: scroll
+}
+#send-message:hover{
+    color:#808080;
+    cursor:pointer
+}
